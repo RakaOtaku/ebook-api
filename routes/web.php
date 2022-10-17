@@ -16,7 +16,29 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
+//string
 Route :: get('coba', function(){
     return "haloo :D";
+});
+//array JSON
+Route :: get('coba1', function(){
+    return ['P mabar', 'P ngopi'];
+});
+//array JSON
+Route :: get('coba2', function(){
+    return [
+        'Nama' => 'Raka Andriy Shevchenko',
+        'NIS' => 3103120187,
+        'Kelas' => 'XII RPL 6'
+    ];
+});
+//array JSON
+Route::get('coba3', function(){
+    return response()->json(
+        [
+            'Nama' => 'Raka Andriy Shevchenko',
+            'NIS' => 3103120187,
+            'Kelas' => 'XII RPL 6'
+        ], 201
+    );
 });
