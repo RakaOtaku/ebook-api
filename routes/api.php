@@ -23,11 +23,25 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('me', [AuthController::class, 'me']);
 
-Route::resource('books', BookController::class) -> except([
-    'create', 'edit'
-]);
-//Route::resource('books', BookController::class);
+//API route for register new user
+Route::post('/register', [AuthController::class, 'register']);
+//API route for login user
+Route::post('/login', [AuthController::class, 'login']);
 
-Route::resource('authors', AuthorController::class) -> except([
-    'create', 'edit'
-]);
+//Protecting Routes
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/profile', function(Request $request) {
+        return auth()->user();
+    });
+
+    Route::resource('books', BookController::class)->except(
+        ['create', 'edit']
+    );
+
+    Route::resource('authors', AuthorController::class)->except(
+        ['create', 'edit']
+    );
+
+    // API route for logout user
+    Route::post('/logout', [AuthController::class, 'logout']);
+});
